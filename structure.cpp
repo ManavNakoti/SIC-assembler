@@ -1,4 +1,5 @@
 //Data Structures for SIC Assembler
+#include<iostream>
 #include<unordered_map>
 #include<string>
 
@@ -13,8 +14,18 @@ class Optable {
         {"STCH", 0x54}, {"TIX", 0x2C}
     };
     public:
-        std::uint8_t getOpcode(std::string mnemonic) {
-            return opcodeTable[mnemonic];
+        std::uint8_t getOpcode(std::string& mnemonic){
+            if(opcodeTable.find(mnemonic) != opcodeTable.end())
+                return opcodeTable[mnemonic];
+            else{
+                throw std::invalid_argument("Invalid Opcode");
+            }
+        }
+
+        void displayOptable(){
+            for(auto& x: opcodeTable){
+                std::cout << x.first << " " << std::hex << (int)x.second << std::endl;
+            }
         }
 };
 
@@ -26,7 +37,16 @@ class Symtab {
             symbolTable[symbol] = address;
         }
         std::uint16_t getAddress(std::string symbol) {
-            return symbolTable[symbol];
+            if(symbolTable.find(symbol) != symbolTable.end())
+                return symbolTable[symbol];
+            else{
+                throw std::invalid_argument("Invalid Symbol");
+            }
+        }
+        void displaySymtab(){
+            for(auto& x: symbolTable){
+                std::cout << x.first << " " << std::hex << x.second << std::endl;
+            }
         }
 };
 

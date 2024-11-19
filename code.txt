@@ -1,0 +1,10 @@
+PROG:  START 1000         ; Program starts at address 1000
+       LDA FIVE           ; Load the value at label FIVE into register A
+       STA ALPHA          ; Store the contents of register A into ALPHA
+       LDCH CHARZ         ; Load a character from CHARZ into register A
+       STCH C1            ; Store the character from register A into C1
+ALPHA: RESW 1             ; Reserve one word (3 bytes) for ALPHA
+FIVE:  WORD 5             ; Define a constant value 5 (stored in 3 bytes)
+CHARZ: BYTE C'Z'          ; Define a character constant 'Z'
+C1:    RESB 1             ; Reserve one byte for C1
+END

@@ -11,10 +11,12 @@ class Optable {
         {"DIV", 0x24}, {"COMP", 0x28}, {"J", 0x3C},
         {"JEQ", 0x30}, {"JGT", 0x34}, {"JLT", 0x38},
         {"JSUB", 0x48}, {"RSUB", 0x4C}, {"LDCH", 0x50},
-        {"STCH", 0x54}, {"TIX", 0x2C}
+        {"STCH", 0x54}, {"TIX", 0x2C},{"STL", 0x14},
+        {"STX", 0x10}, {"TD", 0xE0}, {"RD", 0xD8},
+        {"WD", 0xDC},{"LDL", 0x08}
     };
     public:
-        std::uint8_t getOpcode(std::string& mnemonic){
+        std::uint8_t getOpcode(const std::string& mnemonic){
             if(opcodeTable.find(mnemonic) != opcodeTable.end())
                 return opcodeTable[mnemonic];
             else{
@@ -22,6 +24,9 @@ class Optable {
             }
         }
 
+        bool isOpcode(const std::string& mnemonic){
+            return opcodeTable.find(mnemonic) != opcodeTable.end();
+        }
         void displayOptable(){
             for(auto& x: opcodeTable){
                 std::cout << x.first << " " << std::hex << (int)x.second << std::endl;
@@ -30,7 +35,7 @@ class Optable {
 };
 
 //Symbol Table
-class Symtab {
+class Symtable {
     std::unordered_map<std::string, std::uint16_t> symbolTable;
     public:
         void insert(std::string symbol, std::uint16_t address) {
@@ -43,10 +48,13 @@ class Symtab {
                 throw std::invalid_argument("Invalid Symbol");
             }
         }
+        std::uint16_t exists(std::string symbol) {
+            return symbolTable.find(symbol) != symbolTable.end();
+        }
         void displaySymtab(){
             for(auto& x: symbolTable){
-                std::cout << x.first << " " << std::hex << x.second << std::endl;
+              
+              std::cout << x.first << " " << std::hex << x.second << std::endl;
             }
         }
-};
-
+};  //End of Symtab
